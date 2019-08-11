@@ -21,6 +21,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && docker-php-ext-enable xdebug \
     && rm -rf /var/lib/apt/lists/*
 
+RUN pecl install redis && docker-php-ext-enable redis
+
 
 RUN mv "${PHP_INI_DIR}/php.ini-production" "${PHP_INI_DIR}/php.ini" \
     && sed -i 's/memory_limit = .*/memory_limit = 512M/' "${PHP_INI_DIR}/php.ini"
@@ -59,7 +61,7 @@ RUN /usr/local/bin/composer global require hirak/prestissimo -n; exit 0
 
 # install Symfony Flex globally to speed up download of Composer packages (parallelized prefetching)
 RUN set -eux; \
-	composer global require "symfony/flex" --prefer-dist --no-progress --no-suggest --classmap-authoritative; \
+	composer global require "symfony/flex" --prefer-dist --no-suggest --classmap-authoritative; \
 	composer clear-cache
 
 VOLUME '/var/www/.composer'
@@ -75,7 +77,7 @@ COPY ./composer.json /var/www/composer.json
 COPY ./composer.lock /var/www/composer.lock
 COPY ./symfony.lock /var/www/symfony.lock
 
-RUN composer install -o -v --prefer-dist --no-dev --no-scripts --no-progress --no-suggest; \
+RUN composer install -o -v --prefer-dist --no-scripts --no-suggest; \
     composer clear-cache
 
 ########################################################################################################################

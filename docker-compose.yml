@@ -5,10 +5,10 @@ services:
     build:
       context: ./
       dockerfile: ./docker/api/Dockerfile
-    image: eftpos-api:latest
+    image: poc-api:latest
     restart: on-failure
     environment:
-        DATABASE_URL: mysql://poc:poc@127.0.0.1:3306/poc
+        DATABASE_URL: mysql://poc:poc@mysql:3306/poc
         PHP_OPCACHE_VALIDATE_TIMESTAMPS: 1
     depends_on:
       - mysql
@@ -52,18 +52,12 @@ services:
   redis:
     image: redis:alpine
 
-#  worker:
-#    image: eftpos-api:latest
-#    command: "php artisan queue:work --sleep=3 --tries=3 --delay=30"
-#    restart: on-failure
-#    environment:
-#      DB_CONNECTION: mysql
-#      DB_HOST: mysql
-#      DB_PORT: 3306
-#      DB_DATABASE: eftpos
-#      DB_USERNAME: eftpos
-#      DB_PASSWORD: eftpos
-#      QUEUE_DRIVER: redis
-#      PHP_OPCACHE_VALIDATE_TIMESTAMPS: 1
-#    depends_on:
-#      - api
+  worker:
+    image: poc-api:latest
+    command: "php bin/console messenger:consume -vv"
+    restart: on-failure
+    environment:
+        DATABASE_URL: mysql://poc:poc@mysql:3306/poc
+        PHP_OPCACHE_VALIDATE_TIMESTAMPS: 1
+    depends_on:
+      - api
