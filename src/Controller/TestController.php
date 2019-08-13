@@ -18,12 +18,11 @@ final class TestController extends AbstractController
 //        ]);
 //        $store->createTable();
 
-        $bus->dispatch(new SimpleTextMessage('my simple text'));
-
         $max = 15;
         $array = [];
 
         for ($i = 0; $i < $max; $i++) {
+            $bus->dispatch(new SimpleTextMessage('my simple text'));
             $array[] = \sprintf('Message number %d', $i);
         }
 

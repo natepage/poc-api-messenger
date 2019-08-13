@@ -33,13 +33,11 @@ CONSOLE="/var/www/bin/console"
 #    /bin/su -c "/usr/local/bin/php ${CONSOLE} doctrine:generate:proxies" - www-data
 #fi
 
-#if [ "$ROLE" == "cron" ]; then
-#    while true; do
-#        php /var/www/artisan schedule:run --verbose --no-interaction &
-#        sleep 60
-#    done
-#else
-#    exec "$@"
-#fi
-
-exec "$@"
+if [ "$ROLE" == "cron" ]; then
+    while true; do
+        php /var/www/bin/console schedule:run &
+        sleep 60
+    done
+else
+    exec "$@"
+fi

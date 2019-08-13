@@ -5,11 +5,12 @@ namespace App\Services\Lock;
 
 use App\Services\Lock\Interfaces\LockServiceInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use LoyaltyCorp\Schedule\ScheduleBundle\Interfaces\LockFactoryProviderInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Lock\Factory;
 use Symfony\Component\Lock\Store\PdoStore;
 
-final class LockService implements LockServiceInterface
+final class LockService implements LockServiceInterface, LockFactoryProviderInterface
 {
     /** @var \Symfony\Component\Lock\Factory */
     private $factory;
@@ -42,5 +43,15 @@ final class LockService implements LockServiceInterface
         $factory->setLogger($this->logger);
 
         return $this->factory = $factory;
+    }
+
+    /**
+     * Get lock factory.
+     *
+     * @return \Symfony\Component\Lock\Factory
+     */
+    public function getFactory(): Factory
+    {
+        return $this->createFactory();
     }
 }

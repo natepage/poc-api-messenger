@@ -25,3 +25,5 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    LoyaltyCorp\Schedule\ScheduleBundle\Interfaces\LockFactoryProviderInterface:
+        class: App\Services\Lock\LockService
