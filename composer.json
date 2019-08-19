@@ -7,7 +7,7 @@
         "ext-iconv": "*",
         "api-platform/api-pack": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^2.0",
-        "natepage/schedule-bundle": "dev-master",
+        "loyaltycorp/schedule-bundle": "^1.0",
         "symfony/console": "4.3.*",
         "symfony/dotenv": "4.3.*",
         "symfony/flex": "^1.3.1",
@@ -63,6 +63,5 @@
             "allow-contrib": false,
             "require": "4.3.*"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
