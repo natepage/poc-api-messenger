@@ -1,0 +1,4 @@
+jwt_auth:
+    domain: YOUR_DOMAIN
+    authorized_issuer: https://YOUR_DOMAIN/
+    api_identifier: YOUR_API_IDENTIFIER

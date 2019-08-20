@@ -27,3 +27,10 @@ services:
     # please note that last definitions always *replace* previous ones
     LoyaltyCorp\Schedule\ScheduleBundle\Interfaces\LockFactoryProviderInterface:
         class: App\Services\Lock\LockService
+
+    # Auth0 JWT Encoder for Lexik
+    App\Security\Encoder\Auth0JwtEncoder:
+        class: App\Security\Encoder\Auth0JwtEncoder
+        arguments:
+            - '@jwt_auth.auth0_service'
+            - '%jwt_auth.secret_base64_encoded%'
